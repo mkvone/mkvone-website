@@ -8,6 +8,7 @@ const nextConfig = {
     images: {
         domains: ['assets.coingecko.com'],
     },
+    output: 'standalone',
 };
 
 module.exports = nextConfig;
