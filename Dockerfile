@@ -13,7 +13,7 @@ RUN \
   elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
   elif [-f bun.lockb]; then bun --frozen-lockfile; \
-  else bun install \
+  else bun install; \
   fi
 
 
