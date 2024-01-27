@@ -20,8 +20,9 @@ RUN \
   elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
   elif [ -f bun.lockb ]; then apk add --no-cache curl && curl -fsSL https://bun.sh/install | bash && bun --frozen-lockfile; \
-  else echo "No lock file found. Please add a package manager lock file."; exit 1; \
+  else apk add --no-cache curl && curl -fsSL https://bun.sh/install | bash && bun install --frozen-lockfile; \
   fi
+
 
 # Rebuild the source code only when needed
 FROM base AS builder
