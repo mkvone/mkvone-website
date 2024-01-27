@@ -18,7 +18,7 @@ dist
 build
 *.wat
 zig-out
-pnpm-lock.yaml
+# pnpm-lock.yaml
 README.md.template
 src/deps/zig-clap/example
 src/deps/zig-clap/README.md
