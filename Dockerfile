@@ -4,9 +4,6 @@ FROM oven/bun:1 as base
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies if needed
-RUN apk add --no-cache libc6-compat
-
 # Copy package.json and bun.lockb (if exists) and install dependencies
 COPY package.json ./
 RUN bun install 
