@@ -10,7 +10,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # Install Bun in the builder stage to use for building the application
-RUN apk add --no-cache curl && curl -fsSL https://bun.sh/install | sh
 RUN bun run build
 
 # Runner stage to run the application
