@@ -14,6 +14,7 @@ COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 #   else echo "Lockfile not found." && exit 1; \
 #   fi
 FROM oven/bun:1-alpine
+WORKDIR /app
 RUN bun install
 
 # Rebuild the source code only when needed
@@ -26,7 +27,7 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
-FROM oven/bun:1-alpine
+WORKDIR /app
 RUN bun run  build
 
 # If using npm comment out above and use below instead
