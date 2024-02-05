@@ -31,9 +31,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
 
-# Install Bun in the runner stage to use for running the application
-RUN apk add --no-cache curl && curl -fsSL https://bun.sh/install | sh
-
 # Change the ownership of the application files to the non-root user
 RUN chown -R nextjs:nodejs ./
 
