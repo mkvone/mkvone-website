@@ -13,7 +13,7 @@ RUN bun install
 FROM deps AS builder
 WORKDIR /app
 COPY . .
-
+COPY --from=deps /app/node_modules ./node_modules
 RUN bun run build
 
 
@@ -28,6 +28,8 @@ ENV NODE_ENV production
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=builder  /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 
 EXPOSE 1111
 
