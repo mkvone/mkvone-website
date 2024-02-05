@@ -5,8 +5,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
+COPY package.json ./
+RUN bun install 
 
 # Build the app
 FROM deps AS builder
