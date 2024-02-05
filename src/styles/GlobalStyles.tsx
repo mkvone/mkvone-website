@@ -1,5 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components';
-
+import reset from 'styled-reset';
 const styled = { createGlobalStyle };
 
 const GlobalStyles = styled.createGlobalStyle`
@@ -38,10 +38,23 @@ const GlobalStyles = styled.createGlobalStyle`
         vertical-align: baseline;
     }
     body {
-        line-height: 1;
-        font-family: 'Noto Sans KR', sans-serif;
-        /* background-color: #363535; */
-        /* background-color: white; */
+        background: ${({ theme }) => theme.bg.primary};
+        /* background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+        background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+        background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%); */
+
+        color: ${({ theme }) => theme.text.primary};
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        line-height: 1.5;
+        margin: 0 auto;
+        font-family: 'Montserrat', 'Helvetica Neue', 'NanumSquare', 'Noto Sans', 'Noto Sans CJK KR', 'sans-serif';
+        word-break: keep-all;
+        word-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
     }
     ol,
     ul {

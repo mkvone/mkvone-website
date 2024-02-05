@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 const St = {
     Container: styled.div`
-        padding: 5% 10%;
-        min-height: 100vh; // height 대신 min-height 사용
+        padding: 0 10%;
+        min-height: 100vh;
     `,
 };
 
@@ -15,8 +15,8 @@ export default function Home() {
     return (
         <>
             {' '}
+            <LandingPage />
             <St.Container>
-                <LandingPage />
                 <ChainsContainer />
                 <EndpointsTable />
             </St.Container>

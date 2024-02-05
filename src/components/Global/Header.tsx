@@ -1,9 +1,9 @@
 'use client';
 import styled, { css } from 'styled-components';
 import Image from 'next/image';
-import { Pacifico } from 'next/font/google';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
+import { SocialMedia } from './SocialMedia';
 
 interface StyledProps {
     $sticky: boolean;
@@ -13,9 +13,11 @@ const St = {
         display: flex;
         align-items: center;
         justify-content: start;
+        justify-content: space-between;
 
         font-size: ${({ theme }) => theme.fontSize.xlg};
         font-weight: ${({ theme }) => theme.fontWeight.bold};
+
         transition: 0.5s;
         z-index: 1000;
         ${({ $sticky, theme }) =>
@@ -32,11 +34,10 @@ const St = {
                       background-color: #363535;
                       color: #363535;
                       background-color: white;
+                      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
                   `}
     `,
-    Logo: styled(Image)`
-        /* margin-right: 10px; */
-    `,
+    Logo: styled(Image)``,
     BrandName: styled.h1<StyledProps>`
         font-family: 'Pacifico', cursive;
         font-size: ${({ theme }) => theme.fontSize.xxxxxxl};
@@ -47,6 +48,10 @@ const St = {
         display: flex;
         align-items: center;
         justify-content: start;
+        margin-left: 5%;
+    `,
+    SocialLink: styled.div`
+        margin-right: 5%;
     `,
 };
 
@@ -72,6 +77,9 @@ export default function Header() {
                     <Logo />
                     <St.BrandName $sticky={sticky}>Metta Karuna Validator</St.BrandName>{' '}
                 </St.Brand>
+                <St.SocialLink>
+                    <SocialMedia />
+                </St.SocialLink>
             </St.Nav>
         </>
     );

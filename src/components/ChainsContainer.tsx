@@ -5,7 +5,7 @@ import { useChainsData } from '@/hooks/useChainsData';
 const St = {
     Container: styled.div`
         max-width: 7xl;
-        margin: auto;
+        /* margin: auto; */
         padding: 12px 16px;
         @media (min-width: 640px) {
             padding: 12px 24px;
@@ -16,12 +16,25 @@ const St = {
     `,
     Title: styled.h2`
         /* font-size: 1.875rem; 30px */
-        font-size: ${({ theme }) => theme.fontSize.xxxxl};
+
         font-weight: 800;
         line-height: 1.2;
-        color: white; /* gray-900 */
+        color: ${({ theme }) => theme.text.primary};
         margin-bottom: 16px;
         text-align: center;
+
+        font-size: 1.875rem;
+        font-weight: bold;
+        line-height: 1;
+        margin: 0;
+
+        @media (min-width: 640px) {
+            font-size: 3rem;
+        }
+
+        @media (min-width: 1280px) {
+            font-size: 4.5rem;
+        }
     `,
     CardGrid: styled.div`
         margin-top: 24px;

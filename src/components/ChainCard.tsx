@@ -15,7 +15,7 @@ interface ChainCardProps {
 const St = {
     Card: styled.div`
         background-color: #ffffff;
-        border: 1px solid #e5e7eb; /* border-gray-200 */
+        border: 1px solid #e5e7eb;
         border-radius: 8px;
         padding: 16px;
         display: flex;
@@ -23,12 +23,11 @@ const St = {
         align-items: start;
         width: 100%;
 
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
         ${({ theme }) => theme.media.xs} {
-            /* grid-template-columns: repeat(1, minmax(0, 1fr)); */
             width: 250px;
         }
         ${({ theme }) => theme.media.sm} {
-            /* grid-template-columns: repeat(1, minmax(0, 1fr)); */
             width: 250px;
         }
     `,

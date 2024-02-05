@@ -1,51 +1,90 @@
 import { useGetEndpointsQuery } from '@/redux/services/Api';
 import styled from 'styled-components';
 
-const StyledTable = styled.table`
-    margin-top: 5%;
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+const St = {
+    Container: styled.div`
+        margin-top: 5%;
 
-    th,
-    td {
-        padding: 8px;
-        border: 1px solid #ddd;
-        font-size: ${({ theme }) => theme.fontSize.lg};
-        ${({ theme }) => theme.media.xxl} {
-            font-size: ${({ theme }) => theme.fontSize.xxxlg};
+        padding: 12px 16px;
+        @media (min-width: 640px) {
+            padding: 12px 24px;
         }
-        ${({ theme }) => theme.media.xl} {
-            font-size: ${({ theme }) => theme.fontSize.xxlg};
+        @media (min-width: 1024px) {
+            padding: 12px 32px;
         }
-        ${({ theme }) => theme.media.lg} {
-            font-size: ${({ theme }) => theme.fontSize.xlg};
-        }
-    }
+    `,
+    Title: styled.h2`
+        font-weight: 800;
+        line-height: 1.2;
+        color: ${({ theme }) => theme.text.primary};
+        margin-bottom: 16px;
+        text-align: center;
 
-    tr:nth-child(even) {
+        font-size: 1.875rem;
+        font-weight: bold;
+        line-height: 1;
+
+        @media (min-width: 640px) {
+            font-size: 3rem;
+        }
+
+        @media (min-width: 1280px) {
+            font-size: 4.5rem;
+        }
+    `,
+    StyledTable: styled.table`
+        margin-top: 2%;
+        width: 100%;
+        border-collapse: collapse;
+
+        text-align: left;
+
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            font-size: ${({ theme }) => theme.fontSize.lg};
+            ${({ theme }) => theme.media.xxl} {
+                font-size: ${({ theme }) => theme.fontSize.xxxlg};
+            }
+            ${({ theme }) => theme.media.xl} {
+                font-size: ${({ theme }) => theme.fontSize.xxlg};
+            }
+            ${({ theme }) => theme.media.lg} {
+                font-size: ${({ theme }) => theme.fontSize.xlg};
+            }
+        }
         background-color: #f9f9f9;
-    }
-    tr:nth-child(odd) {
-        background-color: gray;
-        color: black;
-    }
-    th {
-        background-color: #3a5ea7;
-    }
-    a {
-        font-size: ${({ theme }) => theme.fontSize.lg};
-        ${({ theme }) => theme.media.xxl} {
-            font-size: ${({ theme }) => theme.fontSize.xxxlg};
+        tr:nth-child(even) {
+            /* background-color: #f9f9f9; */
         }
-        ${({ theme }) => theme.media.xl} {
-            font-size: ${({ theme }) => theme.fontSize.xxlg};
+        tr:nth-child(odd) {
+            /* background-color: gray; */
+            color: black;
         }
-        ${({ theme }) => theme.media.lg} {
-            font-size: ${({ theme }) => theme.fontSize.xlg};
+        th {
+            background-color: gray;
+            text-align: center;
         }
-    }
-`;
+        a {
+            font-size: ${({ theme }) => theme.fontSize.lg};
+            ${({ theme }) => theme.media.xxl} {
+                font-size: ${({ theme }) => theme.fontSize.xxxlg};
+            }
+            ${({ theme }) => theme.media.xl} {
+                font-size: ${({ theme }) => theme.fontSize.xxlg};
+            }
+            ${({ theme }) => theme.media.lg} {
+                font-size: ${({ theme }) => theme.fontSize.xlg};
+            }
+        }
+        @media (max-width: 700px) {
+            display: none;
+        }
+    `,
+};
 
 const EndpointsTable = () => {
     const { data: endpointsData, isLoading, isError } = useGetEndpointsQuery(null);
@@ -54,21 +93,24 @@ const EndpointsTable = () => {
     if (isError || !endpointsData) return <div>Error occurred!</div>;
 
     return (
-        <StyledTable>
-            <thead>
-                <tr>
-                    <th>Network</th>
-                    <th>API</th>
-                    <th>RPC</th>
-                    <th>GRPC</th>
-                </tr>
-            </thead>
-            <tbody>
-                {Object.entries(endpointsData).map(([network, { api, rpc, grpc }]) => (
-                    <EndpointRow key={network} network={network} api={api} rpc={rpc} grpc={grpc} />
-                ))}
-            </tbody>
-        </StyledTable>
+        <St.Container>
+            <St.Title>Public Endpoints</St.Title>
+            <St.StyledTable>
+                <thead>
+                    <tr>
+                        <th>Network</th>
+                        <th>API</th>
+                        <th>RPC</th>
+                        <th>GRPC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.entries(endpointsData).map(([network, { api, rpc, grpc }]) => (
+                        <EndpointRow key={network} network={network} api={api} rpc={rpc} grpc={grpc} />
+                    ))}
+                </tbody>
+            </St.StyledTable>
+        </St.Container>
     );
 };
 
