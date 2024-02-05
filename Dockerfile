@@ -1,51 +1,47 @@
-# Use bun image for dependency installation
+# Dependency installation stage using Bun
 FROM oven/bun:1-alpine AS deps
 WORKDIR /app
 COPY package.json bun.lockb* ./
 RUN bun install
 
-# Rebuild the source code only when needed using the base node image
+# Builder stage to build the application using Node.js image
 FROM node:18-alpine AS builder
 WORKDIR /app
-# Since we're using bun, we might not need to copy node_modules from deps stage
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Use bun installed in the builder stage to run the build process
+# Install Bun in the builder stage to use for building the application
 RUN apk add --no-cache curl && curl -fsSL https://bun.sh/install | sh
 RUN bun run build
 
-# If using npm comment out above and use below instead
-# RUN npm run build
-
-# Production image, copy all the files and run next
-FROM base AS runner
+# Runner stage to run the application
+FROM node:18-alpine AS runner
 WORKDIR /app
 
+# Set environment variables
 ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV PORT 1111
+ENV HOSTNAME 0.0.0.0
 
+# Create a non-root user for running the application
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+# Copy the build output from the builder stage
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/package.json ./package.json
 
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+# Install Bun in the runner stage to use for running the application
+RUN apk add --no-cache curl && curl -fsSL https://bun.sh/install | sh
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Change the ownership of the application files to the non-root user
+RUN chown -R nextjs:nodejs ./
 
+# Switch to the non-root user
 USER nextjs
 
+# Expose the application port
 EXPOSE 1111
 
-ENV PORT 1111
-# set hostname to localhost
-ENV HOSTNAME "0.0.0.0"
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD ["node", "server.js"]
+# Command to run the application using Bun
+CMD ["bun", "run", "server.js"]
